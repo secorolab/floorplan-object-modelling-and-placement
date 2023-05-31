@@ -53,51 +53,48 @@ if __name__ == "__main__":
         fp_model_name = prefixed(g, floorplan).split('fp:')[1]
 
     for my_object, _, _ in g.triples((None, RDF.type, FP["Object"])):
-        my_object_tree = {
-            "name": prefixed(g, my_object),
-            "static": "false"
-        }
         
-        # If the object is a kinematic chain
+        joint_list = []
+        link_list = []
+
+        object_frame = g.value(my_object, FP["object-frame"])
+
+        # Collect the link information
+        for _, _, link in g.triples((my_object, FP["object-links"], None)):
+
+            # Get the objects for the link geometry
+            visual_link = g.value(link, FP["visual-link"])
+            physics_link = g.value(link, FP["physics-link"])
+            simplices_link = g.value(link, FP["link"])
+
+            # Get the sdf geometry description
+            sdf_visual_geometry = get_sdf_geometry(g, visual_link)
+            sdf_physics_geometry = get_sdf_geometry(g, physics_link)
+            
+            # Get the sdf inertia description
+            sdf_inertia = {}
+            for inertia in g.subjects(RBD["of-body"], simplices_link):
+                sdf_inertia = get_sdf_intertia(g, inertia)
+
+            # Get the frame for the link
+            link_frame = g.value(link, FP["link-frame"])
+            
+            T = get_transformation_matrix_wrt_frame(g, link_frame, object_frame)
+            pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
+
+            if (DEBUG):
+                print(sdf_visual_geometry, sdf_physics_geometry, sdf_inertia, pose_coordinates)
+
+            link_list.append({
+                "pose": pose_coordinates,
+                "inertial": sdf_inertia,
+                "collision": sdf_physics_geometry,
+                "visual": sdf_visual_geometry,
+                "name" : prefixed(g, simplices_link)
+            })
+                
+        # If the object is a kinematic chain, collect the joint information
         if (my_object, RDF.type, FP["ObjectWithKinematicChain"]):
-            link_list = []
-            joint_list = []
-
-            object_frame = g.value(my_object, FP["object-frame"])
-
-            for _, _, link in g.triples((my_object, FP["object-links"], None)):
-
-                # Get the objects for the link geometry
-                visual_link = g.value(link, FP["visual-link"])
-                physics_link = g.value(link, FP["physics-link"])
-                simplices_link = g.value(link, FP["link"])
-
-                # Get the sdf geometry description
-                sdf_visual_geometry = get_sdf_geometry(g, visual_link)
-                sdf_physics_geometry = get_sdf_geometry(g, physics_link)
-                
-                # Get the sdf inertia description
-                sdf_inertia = {}
-                for inertia in g.subjects(RBD["of-body"], simplices_link):
-                    sdf_inertia = get_sdf_intertia(g, inertia)
-
-                # Get the frame for the link
-                link_frame = g.value(link, FP["link-frame"])
-                
-                T = get_transformation_matrix_wrt_frame(g, link_frame, object_frame)
-                pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
-
-                if (DEBUG):
-                    print(sdf_visual_geometry, sdf_physics_geometry, sdf_inertia, pose_coordinates)
-
-                link_list.append({
-                    "pose": pose_coordinates,
-                    "inertial": sdf_inertia,
-                    "collision": sdf_physics_geometry,
-                    "visual": sdf_visual_geometry,
-                    "name" : prefixed(g, simplices_link)
-                })
-                
             kin_chain = g.value(my_object, FP["kinematic-chain"])
             for _, _, joint in g.triples((kin_chain, KIN["joints"], None)):
                 
@@ -148,8 +145,12 @@ if __name__ == "__main__":
                     "limits": limits
                 })
 
-            my_object_tree["links"] = link_list
-            my_object_tree["joints"] = joint_list
+        my_object_tree = {
+            "name": prefixed(g, my_object),
+            "static": "false",
+            "links": link_list,
+            "joints": joint_list
+        }
         
         if DEBUG:
             pprint(my_object_tree)
