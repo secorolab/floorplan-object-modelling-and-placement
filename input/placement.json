@@ -2,21 +2,14 @@
     "@context": [
         {
             "@base": "http://exsce-floorplan.org/",
-            "fp": "http://exsce-floorplan.org/",
-            "ObjectInstance": "fp:ObjectInstance",
-            "object": {
-                "@id": "fp:object",
-                "@type": "@id"
-            },
-            "frame": {
-                "@id": "fp:frame",
-                "@type": "@id"
-            },
-            "theta": "fp:theta"
+            "coord": "http://exsce-floorplan.org/",
+            "VectorXY": "coord:VectorXY",
+            "theta": "coord:theta"
         },
         "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
         "https://comp-rob2b.github.io/metamodels/geometry/structural-entities.json",
-        "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json"
+        "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-proof-of-concept/metamodel/object.json"
     ],
     "@graph": [
         {
@@ -39,7 +32,7 @@
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
-                "VectorXY"
+                "VectorXYZ"
             ],
             "of-pose": "pose-frame-location-door-1",
             "as-seen-by": "frame-left_long_corridor-wall-1",
@@ -49,13 +42,20 @@
             ],
             "theta": 0.0,
             "x": -23.0,
-            "y": 0.0
+            "y": 0.0,
+            "z": 0.0
         },
         {
             "@id": "door-instance-1",
             "@type": "ObjectInstance",
             "frame": "frame-location-door-1",
-            "object": "door"
+            "of-object": "door",
+            "world": "brsu_building_c_with_doors"
+        },
+        {
+            "@id": "world-frame-tag",
+            "@type": "WorldFrame",
+            "frame": "world-frame"
         }
     ]
 }

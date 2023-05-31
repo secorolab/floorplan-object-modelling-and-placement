@@ -11,7 +11,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon as Pol
 
-from helpers.helpers import loader, prefixed, get_transformation_matrix_wrt_frame
+from helpers.helpers import (
+    loader, 
+    prefixed, 
+    get_transformation_matrix_wrt_frame
+)
 from helpers.sdf import (
     get_sdf_geometry, 
     get_sdf_intertia, 
@@ -157,7 +161,21 @@ if __name__ == "__main__":
         write_object_model_sdf(my_object_tree, output_folder)
 
     # Querie for the pose path from the object instance to the world frame
+    world_frame_tag = g.value(predicate=RDF.type, object=FP["WorldFrame"])
+    world_frame = g.value(world_frame_tag, FP["frame"])
+   # T = get_transformation_matrix_wrt_frame(g, world_frame)
 
+    for my_placement, _, _ in g.triples((None, RDF.type, FP["ObjectInstance"])):
+        
+        world = g.value(my_placement, FP["world"])
+        of_obj = g.value(my_placement, FP["of-object"])
+        frame = g.value(my_placement, FP["frame"])
+        
+        T = get_transformation_matrix_wrt_frame(g, frame, world_frame)
+        pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
+
+        print(pose_coordinates)
+     
     # Build the sdf world
     
     # Write the sdf world

@@ -1,5 +1,8 @@
 import numpy as np
 from .constants import *
+from rdflib import RDF
+
+from . import traversal
 
 def loader(directory):
     import os
@@ -27,26 +30,46 @@ def build_transformation_matrix(x, y, z, theta):
 
     return np.hstack((R, t))
 
-def get_transformation_matrix_wrt_frame(g, frame, target_frame):
+def get_transformation_matrix_wrt_frame(g, root, target):
+    filter = [
+        GEOM["with-respect-to"],
+        GEOM["of"]
+        ]
+    pred_filter = traversal.filter_by_predicates(filter)
+    open_set = traversal.BreadthFirst
 
-    current_frame = frame 
+    parent_map = {}
+
+    # Traverse the graph
+    t_np = traversal.traverse_nodes_with_parent(open_set, g, root, pred_filter)
+    for node, parent in ((node, parent) for (node, parent) in t_np if parent):
+        parent_map[node] = parent
+        if node == target:
+            break
+
+    path = []
+    curr = target
+    while (curr != root):
+        path.append(curr)
+        curr = parent_map[curr]
+    else:
+        path.append(root) 
+
     coordinate_path = []
-
-    while (current_frame != target_frame):
-
-        current_frame_pose = g.value(subject=None, predicate=GEOM["of"], object=current_frame)
-        current_frame_coordinates = g.value(subject=None, predicate=COORD["of-pose"], object=current_frame_pose)
+    for node in path:
+        if GEO["Frame"] in g.objects(node, RDF.type):
+            continue
+        current_frame_coordinates = g.value(predicate=COORD["of-pose"], object=node)
         
+        z_value = g.value(current_frame_coordinates, COORD["z"])
+        z = 0 if z_value == None else z_value.toPython()
         x = g.value(current_frame_coordinates, COORD["x"]).toPython()
         y = g.value(current_frame_coordinates, COORD["y"]).toPython()
-        z = g.value(current_frame_coordinates, COORD["z"]).toPython()
         t = g.value(current_frame_coordinates, FP["theta"]).toPython()
 
         T = build_transformation_matrix(x, y, z, t)
 
         coordinate_path.append(T)
-
-        current_frame = g.value(current_frame_coordinates , COORD["as-seen-by"])
 
     T = np.eye(4)
     for next_T in coordinate_path:

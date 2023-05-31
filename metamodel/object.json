@@ -9,6 +9,8 @@
         "JointWithTree": "obj:JointWithTree",
         "JointLowerLimit": "obj:JointLowerLimit",
         "JointUpperLimit": "obj:JointUpperLimit",
+        "ObjectInstance": "obj:ObjectInstance",
+        "WorldFrame": "obj:WorldFrame",
         "kinematic-chain": {
             "@id": "obj:kinematic-chain",
             "@type": "@id"
@@ -54,6 +56,18 @@
             "@id": "obj:children",
             "@type": "@id",
             "@container": "@set"
+        },
+        "frame": {
+            "@id": "obj:frame",
+            "@type": "@id"
+        },
+        "of-object": {
+            "@id": "obj:of-object",
+            "@type": "@id"
+        },
+        "world": {
+            "@id": "obj:world",
+            "@type": "@id"
         }
     } 
 }

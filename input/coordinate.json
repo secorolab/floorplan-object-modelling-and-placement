@@ -2,9 +2,12 @@
     "@context": [
         {
             "@base": "http://exsce-floorplan.org/",
-            "coord": "https://comp-rob2b.github.io/metamodels/geometry/coordinates#",
-            "VectorXY": "coord:VectorXY",
-            "theta": "coord:theta"
+            "fp": "http://exsce-floorplan.org/",
+            "VectorXY": "fp:VectorXY",
+            "theta": {
+                "@id": "fp:theta",
+                "@type": "xsd:double"
+            }
         },
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
         "https://comp-rob2b.github.io/metamodels/qudt.json"
