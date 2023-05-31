@@ -1,0 +1,83 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+    <model name="my_door">
+        <pose>0 0 0 0 0 0</pose>
+        <static>false</static>
+        <link name="door_body">
+            <pose>0 0.50 1.005 0 0 0 </pose>
+            <inertial>
+                <mass>1.0</mass>
+                <inertia> <!-- inertias are tricky to compute -->
+                    <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+                    <ixx>0.4069</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+                    <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
+                    <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
+                    <iyy>0.3322</iyy>       <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+                    <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
+                    <izz>0.0751</izz>       <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+                </inertia>
+            </inertial>
+            <collision name="collision">
+                <geometry>
+                    <box>
+                        <size>0.05 0.95 1.99</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <geometry>
+                    <box>
+                        <size>0.05 0.95 1.99</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name="door_hinge">
+            <static>true</static>
+            <pose>0 0 1 0 0 0 </pose>
+            <inertial>
+                <mass>100.0</mass>
+                <inertia> <!-- inertias are tricky to compute -->
+                <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+                <ixx>33.22</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+                <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
+                <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
+                <iyy>33.22</iyy>       <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+                <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
+                <izz>0.0415</izz>       <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+                </inertia>
+            </inertial>
+            <collision name="collision">
+                <geometry>
+                    <box>
+                        <size>0.05 0.05 2.0</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <geometry>
+                    <box> 
+                        <size>0.05 0.05 2.0</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint type="revolute" name="hinge">
+            <pose>-0.025 0.025 0 0 0 0</pose>
+            <!-- <child>door_body</child>
+            <parent>door_hinge</parent> -->
+            <child>door_hinge</child>
+            <parent>door_body</parent>
+            <axis>
+                <xyz>0 0 1</xyz>
+                <limit>
+                    <lower>-2.0</lower>
+                    <upper>0.0</upper>
+                </limit>
+            </axis>
+        </joint>
+
+    </model>
+</sdf>

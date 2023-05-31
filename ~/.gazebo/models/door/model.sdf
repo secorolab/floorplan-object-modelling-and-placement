@@ -1,0 +1,83 @@
+
+<?xml version="1.0"?>
+<sdf version="1.4">
+<model name="fp:door">
+<pose>0 0 0 0 0 0</pose>
+<static>false</static>
+
+
+<link name="fp:door-body">
+<pose>0.0 0.5 1.005 0.0 -0.0 0.0</pose>
+<inertial>
+<mass>1.0</mass>
+<inertia> 
+<ixx>0.4069</ixx>
+<ixy>0.0</ixy>
+<ixz>0.0</ixz>
+<iyy>0.3322</iyy> 
+<iyz>0.0</iyz>
+<izz>0.0751</izz>
+</inertia>
+</inertial>
+<collision name="collision">
+<geometry>
+<box>
+<size>0.05 0.95 1.99</size>
+</box>
+</geometry>
+</collision>
+<visual name="visual">
+<geometry>
+<box>
+<size>0.05 0.95 1.99</size>
+</box>
+</geometry>
+</visual>
+</link>
+
+
+<link name="fp:door-hinge">
+<pose>0.0 0.0 1.0 0.0 -0.0 0.0</pose>
+<inertial>
+<mass>100.0</mass>
+<inertia> 
+<ixx>33.22</ixx>
+<ixy>0.0</ixy>
+<ixz>0.0</ixz>
+<iyy>33.22</iyy> 
+<iyz>0.0</iyz>
+<izz>0.0415</izz>
+</inertia>
+</inertial>
+<collision name="collision">
+<geometry>
+<box>
+<size>0.05 0.05 2.0</size>
+</box>
+</geometry>
+</collision>
+<visual name="visual">
+<geometry>
+<box>
+<size>0.05 0.05 2.0</size>
+</box>
+</geometry>
+</visual>
+</link>
+
+
+<joint type="revolute" name="fp:joint-door-hinge">
+<pose frame="fp:door-hinge">-0.025 0.025 1.0 0.0 -0.0 0.0</pose>
+<child>fp:door-body</child>
+<parent>fp:door-hinge</parent>
+<axis>
+<xyz>0 0 1</xyz>
+<limit>
+<lower>0.0</lower>
+<upper>2.0</upper>
+</limit>
+</axis>
+</joint>
+
+</model>
+</sdf>

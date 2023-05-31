@@ -1,0 +1,61 @@
+{
+    "@context": [
+        {
+            "@base": "http://exsce-floorplan.org/",
+            "fp": "http://exsce-floorplan.org/",
+            "ObjectInstance": "fp:ObjectInstance",
+            "object": {
+                "@id": "fp:object",
+                "@type": "@id"
+            },
+            "frame": {
+                "@id": "fp:frame",
+                "@type": "@id"
+            },
+            "theta": "fp:theta"
+        },
+        "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
+        "https://comp-rob2b.github.io/metamodels/geometry/structural-entities.json",
+        "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json"
+    ],
+    "@graph": [
+        {
+            "@id": "point-location-door-1",
+            "@type": "Point"
+        },
+        {
+            "@id": "frame-location-door-1",
+            "@type": "Frame",
+            "origin": "point-location-door-1"
+        },
+        {
+            "@id": "pose-frame-location-door-1",
+            "@type": "Pose",
+            "of": "frame-location-door-1",
+            "with-respect-to": "frame-left_long_corridor-wall-1"
+        },
+        {
+            "@id": "coord-pose-frame-location-door-1",
+            "@type": [
+                "PoseReference",
+                "PoseCoordinate",
+                "VectorXY"
+            ],
+            "of-pose": "pose-frame-location-door-1",
+            "as-seen-by": "frame-left_long_corridor-wall-1",
+            "unit": [
+                "M",
+                "degrees"
+            ],
+            "theta": 0.0,
+            "x": -23.0,
+            "y": 0.0
+        },
+        {
+            "@id": "door-instance-1",
+            "@type": "ObjectInstance",
+            "frame": "frame-location-door-1",
+            "object": "door"
+        }
+    ]
+}

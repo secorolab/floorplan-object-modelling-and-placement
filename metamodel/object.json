@@ -1,0 +1,59 @@
+{
+    "@context": {
+        "obj": "http://exsce-floorplan.org/",
+        "Object": "obj:Object",
+        "ObjectWithKinematicChain": "obj:ObjectWithKinematicChain",
+        "ObjectLink": "obj:ObjectLink",
+        "VisualLink": "obj:VisualLink",
+        "PhysicsLink": "obj:PhysicsLink",
+        "JointWithTree": "obj:JointWithTree",
+        "JointLowerLimit": "obj:JointLowerLimit",
+        "JointUpperLimit": "obj:JointUpperLimit",
+        "kinematic-chain": {
+            "@id": "obj:kinematic-chain",
+            "@type": "@id"
+        },
+        "object-links": {
+            "@id": "obj:object-links",
+            "@type": "@id",
+            "@container": "@set"
+        },
+        "visual-link": {
+            "@id": "obj:visual-link",
+            "@type": "@id"
+        },
+        "physics-link": {
+            "@id": "obj:physics-link",
+            "@type": "@id"
+        },
+        "polytope": {
+            "@id": "obj:polytope",
+            "@type": "@id"
+        },
+        "link": {
+            "@id": "obj:link",
+            "@type": "@id"
+        },
+        "link-frame": {
+            "@id": "obj:link-frame",
+            "@type": "@id"
+        },
+        "object-frame": {
+            "@id": "obj:object-frame",
+            "@type": "@id"
+        },
+        "joint-without-tree": {
+            "@id": "obj:joint-without-tree",
+            "@type": "@id"
+        },
+        "parent": {
+            "@id": "obj:parent",
+            "@type": "@id"
+        },
+        "children": {
+            "@id": "obj:children",
+            "@type": "@id",
+            "@container": "@set"
+        }
+    } 
+}
