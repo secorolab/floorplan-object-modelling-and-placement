@@ -1,7 +1,0 @@
-Model name: brsu_building_c_with_doors 
-
-Objects: [{'@id': 'http://exsce-floorplan.org/door', '@type': ['http://exsce-floorplan.org/Object']}]
-Instances: [{'@id': 'http://exsce-floorplan.org/door-instance-1', '@type': ['http://exsce-floorplan.org/ObjectInstance'], 'https://comp-rob2b.github.io/metamodels/geometry/coordinates#as-seen-by': [{'@id': 'http://exsce-floorplan.org/frame-left_long_corridor-wall-1'}], 'https://comp-rob2b.github.io/metamodels/geometry/coordinates#theta': [{'@value': 0.0}], 'https://comp-rob2b.github.io/metamodels/geometry/coordinates#x': [{'@type': 'xsd:double', '@value': '-23.0'}], 'https://comp-rob2b.github.io/metamodels/geometry/coordinates#y': [{'@type': 'xsd:double', '@value': '0.0'}]}]
-
-
-[]
