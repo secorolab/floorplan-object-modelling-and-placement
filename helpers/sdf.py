@@ -45,10 +45,16 @@ def get_sdf_joint_type(g, joint):
         
         if o == KIN["RevoluteJoint"]:
             return "revolute"
+        else:
+            return "fixed"
         
 def get_sdf_axis_of_rotation(g, joint):
     
     common_axis = g.value(joint, KIN["common-axis"])
+
+    if common_axis == None:
+        # Default value for unexpressed common axis in sdf
+        return "0 0 1"
 
     x = 0
     y = 0
@@ -74,7 +80,6 @@ def write_object_model_sdf(data, output_folder):
     full_path = os.path.join(output_folder, name_without_id)
 
     if not os.path.exists(full_path):
-        print("does not exists")
         os.makedirs(full_path)
 
     template = env.get_template('model.sdf.jinja')
@@ -90,3 +95,20 @@ def write_object_model_sdf(data, output_folder):
     with open(os.path.join(full_path, "model.config".format(name=name_without_id)), "w") as f:
         f.write(output)
         print("{name} CONFIG FILE: {path}".format(name=name_without_id, path=os.path.join(full_path, "{name}.config".format(name=name_without_id))))
+
+def write_world_model_sdf(data, output_folder):
+    file_loader = FileSystemLoader('templates')
+    env = Environment(loader=file_loader)
+
+    name_without_id = data["world_name"][3:]
+
+    full_path = os.path.join(output_folder, name_without_id)
+    if not os.path.exists(full_path):
+        os.makedirs(full_path)
+
+    template = env.get_template('world.sdf.jinja')
+    output = template.render(data=data, trim_blocks=True, lstrip_blocks=True)
+
+    with open(os.path.join(full_path, "{name_without_id}.sdf".format(name_without_id=name_without_id)), "w") as f:
+        f.write(output)
+        print("{name} WORLD FILE: {path}".format(name=name_without_id, path=os.path.join(full_path, "model.sdf")))

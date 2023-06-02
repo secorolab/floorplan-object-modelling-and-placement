@@ -13,42 +13,42 @@
     ],
     "@graph": [
         {
-            "@id": "point-location-door-1",
+            "@id": "point-location-door-2",
             "@type": "Point"
         },
         {
-            "@id": "frame-location-door-1",
+            "@id": "frame-location-door-2",
             "@type": "Frame",
-            "origin": "point-location-door-1"
+            "origin": "point-location-door-2"
         },
         {
-            "@id": "pose-frame-location-door-1",
+            "@id": "pose-frame-location-door-2",
             "@type": "Pose",
-            "of": "frame-location-door-1",
+            "of": "frame-location-door-2",
             "with-respect-to": "frame-left_long_corridor-wall-1"
         },
         {
-            "@id": "coord-pose-frame-location-door-1",
+            "@id": "coord-pose-frame-location-door-2",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
-            "of-pose": "pose-frame-location-door-1",
+            "of-pose": "pose-frame-location-door-2",
             "as-seen-by": "frame-left_long_corridor-wall-1",
             "unit": [
                 "M",
                 "degrees"
             ],
             "theta": 0.0,
-            "x": 20.5,
+            "x": 14.5,
             "y": 0.1,
             "z": 0.0
         },
         {
-            "@id": "door-instance-1",
+            "@id": "door-instance-2",
             "@type": "ObjectInstance",
-            "frame": "frame-location-door-1",
+            "frame": "frame-location-door-2",
             "of-object": "door",
             "world": "brsu_building_c_with_doorways"
         },

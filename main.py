@@ -22,11 +22,10 @@ from helpers.sdf import (
     get_sdf_pose_from_transformation_matrix,
     get_sdf_joint_type,
     get_sdf_axis_of_rotation,
-    write_object_model_sdf
+    write_object_model_sdf,
+    write_world_model_sdf
 )
 from helpers.constants import *
-
-DEBUG = True
 
 if __name__ == "__main__":
 
@@ -57,7 +56,7 @@ if __name__ == "__main__":
         fp_model_name = prefixed(g, floorplan).split('fp:')[1]
 
     for my_object, _, _ in g.triples((None, RDF.type, FP["Object"])):
-        
+        print(my_object)
         joint_list = []
         link_list = []
 
@@ -82,7 +81,7 @@ if __name__ == "__main__":
 
             # Get the frame for the link
             link_frame = g.value(link, FP["link-frame"])
-            
+            #print(link_frame, object_frame)
             T = get_transformation_matrix_wrt_frame(g, link_frame, object_frame)
             pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
 
@@ -98,7 +97,8 @@ if __name__ == "__main__":
             })
                 
         # If the object is a kinematic chain, collect the joint information
-        if (my_object, RDF.type, FP["ObjectWithKinematicChain"]):
+        if FP["ObjectWithKinematicChain"] in g.objects(my_object, RDF.type):
+            
             kin_chain = g.value(my_object, FP["kinematic-chain"])
             for _, _, joint in g.triples((kin_chain, KIN["joints"], None)):
                 
@@ -115,19 +115,20 @@ if __name__ == "__main__":
 
                 common_axis = g.value(joint, KIN["common-axis"])
                 joint_frame = None
-
                 for _, _, vector in g.triples((common_axis, GEOM["lines"], None)):
                     for p in g.predicates(None, vector):
 
                         # If the vector is not related to the parent then ignore this vector
+                        print(p, vector, parent)
                         if len([p for p in g.predicates(parent, vector)]) == 0:
                             continue
-
+                        
                         subject = g.value(predicate=p, object=vector)
                         for _, _, _ in g.triples((subject, RDF.type, GEO["Frame"])):
                             joint_frame = subject
 
                 # determine frame of reference and pose wrt object frame
+                print(joint_frame, object_frame)
                 T = get_transformation_matrix_wrt_frame(g, joint_frame, object_frame)
                 pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
 
@@ -163,19 +164,39 @@ if __name__ == "__main__":
     # Querie for the pose path from the object instance to the world frame
     world_frame_tag = g.value(predicate=RDF.type, object=FP["WorldFrame"])
     world_frame = g.value(world_frame_tag, FP["frame"])
-   # T = get_transformation_matrix_wrt_frame(g, world_frame)
 
-    for my_placement, _, _ in g.triples((None, RDF.type, FP["ObjectInstance"])):
+    data = {
+        "instances": [],
+        "world_name": None,
+        "model_name": None
+    }
+
+    # Go through the object instances
+    for instance, _, _ in g.triples((None, RDF.type, FP["ObjectInstance"])):
         
-        world = g.value(my_placement, FP["world"])
-        of_obj = g.value(my_placement, FP["of-object"])
-        frame = g.value(my_placement, FP["frame"])
+        # Get the world name
+        world = g.value(instance, FP["world"])
+
+        #  Name of the object
+        of_obj = g.value(instance, FP["of-object"])
+
+        # ID of the frame
+        frame = g.value(instance, FP["frame"])
         
+        # Get the transfomation from the instance pose frame and the world frame
         T = get_transformation_matrix_wrt_frame(g, frame, world_frame)
         pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
 
-        print(pose_coordinates)
-     
-    # Build the sdf world
-    
-    # Write the sdf world
+        # Build a dictionary for the instance for the jinja template
+        instance = {
+            "pose": pose_coordinates,
+            "static": "false",
+            "name": prefixed(g, of_obj)[3:],
+            "instance_name": prefixed(g, instance)[3:]
+        }
+        data["instances"].append(instance)
+        data["model_name"] = prefixed(g, world)[3:]
+        data["world_name"] = "{}_with_objects".format(prefixed(g, world))
+
+    # Build and write the sdf world
+    write_world_model_sdf(data, worlds_output_path)

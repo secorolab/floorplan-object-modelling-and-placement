@@ -165,7 +165,7 @@
             "x": 0,
             "y": 0,
             "z": 1,
-            "theta": 0
+            "theta": -1.57
         },
         {
             "@id": "coord-pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
@@ -208,7 +208,7 @@
             "of-pose": "pose-frame-door-body-center-wrt-frame-door-body-origin",
             "as-seen-by": "frame-door-body-hinge",
             "x": 0.025,
-            "y": 0.475,
+            "y": 0.465,
             "z": 0.005,
             "theta": 0
         },
@@ -265,8 +265,8 @@
             "@type": ["Polytope", "3DPolytope", "CuboidWithSize"],
             "unit": "M",
             "x-size": 0.05,
-            "y-size": 0.95,
-            "z-size": 1.99
+            "y-size": 0.93,
+            "z-size": 1.98
         },
         {
             "@id": "polytope-door-hinge",
@@ -274,7 +274,7 @@
             "unit": "M",
             "x-size": 0.05,
             "y-size": 0.05,
-            "z-size": 2.0
+            "z-size": 2
         },
         {
             "@id": "inertia-door-body",

@@ -9,3 +9,4 @@ GEOM = rdflib.Namespace("https://comp-rob2b.github.io/metamodels/geometry/spatia
 GEO = rdflib.Namespace("https://comp-rob2b.github.io/metamodels/geometry/structural-entities#")
 KSTATE = rdflib.Namespace("https://comp-rob2b.github.io/metamodels/kinematic-chain/state#")
 QUDT = rdflib.Namespace("http://qudt.org/schema/qudt/")
+QUDT_VOCAB = rdflib.Namespace("http://qudt.org/vocab/unit/")

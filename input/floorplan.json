@@ -644,7 +644,7 @@
             "shape": "polygon-classroom_c018"
         },
         {
-            "@id": "brsu_building_c_with_doors",
+            "@id": "brsu_building_c_with_doorways",
             "@type": "FloorPlan",
             "spaces": [
                 "space-stairway_room_center",
