@@ -1,0 +1,78 @@
+{
+    "@context": {
+        "st": "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/state#",
+        "State": "st:State",
+        "Transition": "st:Transition",
+        "TransitionTable": "st:TransitionTable",
+        "FiniteStateMachine": "st:FiniteStateMachine",
+        "Event": "st:Event",
+        "EventReaction": "st:EventReaction",
+        "EventReactionTable": "st:EventReactionTable",
+        "FiniteStateMachineWithEvents": "st:FiniteStateMachine",
+        "JointState": "st:JointState",
+        "start-state": {
+            "@id": "st:start-state",
+            "@type": "@id"
+        },
+        "end-state": {
+            "@id": "st:end-state",
+            "@type": "@id"
+        },
+        "transitions": {
+            "@id": "st:transitions",
+            "@type": "@id",
+            "@container": "@list"
+        },
+        "states": {
+            "@id": "st:states",
+            "@type": "@id",
+            "@container": "@list"
+        },
+        "state": {
+            "@id": "st:state",
+            "@type": "@id"
+        },
+        "transition-table": {
+            "@id": "st:transition-table",
+            "@type": "@id"
+        },
+        "handled-event": {
+            "@id": "st:handled-event",
+            "@type": "@id"
+        },
+        "transition": {
+            "@id": "st:transition",
+            "@type": "@id"
+        },
+        "fired-event": {
+            "@id": "st:fired-event",
+            "@type": "@id"
+        },
+        "reactions": {
+            "@id": "st:reactions",
+            "@type": "@id",
+            "@container": "@list"
+        },
+        "events": {
+            "@id": "st:events",
+            "@type": "@id",
+            "@container": "@list"
+        },
+        "fsm": {
+            "@id": "st:fsm",
+            "@type": "@id"
+        },
+        "reaction-table": {
+            "@id": "st:reaction-table",
+            "@type": "@id"
+        },
+        "pose": {
+            "@id": "st:pose",
+            "@type": "@id"
+        },
+        "joint": {
+            "@id": "st:joint",
+            "@type": "@id"
+        }
+    }
+}

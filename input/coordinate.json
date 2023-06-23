@@ -10,7 +10,8 @@
             }
         },
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
-        "https://comp-rob2b.github.io/metamodels/qudt.json"
+        "https://comp-rob2b.github.io/metamodels/qudt.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope.json"
     ],
     "@graph": [
         {

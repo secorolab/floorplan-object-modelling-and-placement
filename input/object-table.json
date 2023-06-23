@@ -4,8 +4,8 @@
             "@base": "http://exsce-floorplan.org/"
         },
         "https://comp-rob2b.github.io/metamodels/kinematic-chain/structural-entities.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-proof-of-concept/metamodel/object.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-proof-of-concept/metamodel/polytope.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/object.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope.json",
         "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
         "https://comp-rob2b.github.io/metamodels/newtonian-rigid-body-dynamics.json",
@@ -704,5 +704,6 @@
             ],
             "kinematic-chain": "kinematic-chain-table"
         }
+        
     ]
 }

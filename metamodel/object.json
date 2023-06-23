@@ -1,6 +1,6 @@
 {
     "@context": {
-        "obj": "http://exsce-floorplan.org/",
+        "obj": "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/object#",
         "Object": "obj:Object",
         "ObjectWithKinematicChain": "obj:ObjectWithKinematicChain",
         "ObjectLink": "obj:ObjectLink",
@@ -10,6 +10,7 @@
         "JointLowerLimit": "obj:JointLowerLimit",
         "JointUpperLimit": "obj:JointUpperLimit",
         "ObjectInstance": "obj:ObjectInstance",
+        "PrismaticJoint": "obj:PrismaticJoint",
         "WorldFrame": "obj:WorldFrame",
         "kinematic-chain": {
             "@id": "obj:kinematic-chain",

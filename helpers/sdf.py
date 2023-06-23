@@ -6,10 +6,10 @@ import os
 
 def get_sdf_geometry(g, polytope):
 
-    if (polytope, RDF.type, FP["CuboidWithSize"]):
-        x = g.value(polytope, FP["x-size"])
-        y = g.value(polytope, FP["y-size"])
-        z = g.value(polytope, FP["z-size"])
+    if (polytope, RDF.type, POLY["CuboidWithSize"]):
+        x = g.value(polytope, POLY["x-size"])
+        y = g.value(polytope, POLY["y-size"])
+        z = g.value(polytope, POLY["z-size"])
 
         return {
             "type": "box",
@@ -41,12 +41,13 @@ def get_sdf_pose_from_transformation_matrix(T):
 
 def get_sdf_joint_type(g, joint):
 
-    for o in g.objects(joint, RDF.type):
-        
+    for _, t, o in g.triples((joint, None, None)):
         if o == KIN["RevoluteJoint"]:
             return "revolute"
-        else:
-            return "fixed"
+        elif o == OBJ["PrismaticJoint"]:
+            return "prismatic"
+    else:
+        return "fixed"
         
 def get_sdf_axis_of_rotation(g, joint):
     
@@ -101,7 +102,7 @@ def write_world_model_sdf(data, output_folder):
     env = Environment(loader=file_loader)
 
     name_without_id = data["world_name"][3:]
-
+    
     full_path = os.path.join(output_folder, name_without_id)
     if not os.path.exists(full_path):
         os.makedirs(full_path)

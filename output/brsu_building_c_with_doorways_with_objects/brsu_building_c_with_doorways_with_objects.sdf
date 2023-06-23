@@ -26,17 +26,29 @@
     </include>
     
     <include>
-      <name>door-instance-1</name>
-      <uri>model://door</uri>
-      <static>false</static>
-      <pose>-6.456217554968435 18.71830066760649 0.0 0.0 -0.0 -2.1816615649929103</pose>
-    </include>
-    
-    <include>
       <name>door-instance-2</name>
       <uri>model://door</uri>
       <static>false</static>
-      <pose>-3.0147589368621652 23.633212933340452 0.0 0.0 -0.0 -2.1816615649929103</pose>
+      <pose>-3.0204947012256746 23.625021412897564 0.0 0.0 -0.0 2.5307274153917776</pose>
+      
+        <plugin name="initial_plugin" filename="libinitial_plugin.so">
+          <joint>fp:joint-door-hinge</joint>
+          <position>1.6</position>
+        </plugin>
+      
+    </include>
+    
+    <include>
+      <name>door-instance-1</name>
+      <uri>model://door</uri>
+      <static>false</static>
+      <pose>-6.456217554968435 18.71830066760649 0.0 0.0 -0.0 2.5307274153917776</pose>
+      
+        <plugin name="initial_plugin" filename="libinitial_plugin.so">
+          <joint>fp:joint-door-hinge</joint>
+          <position>0.7</position>
+        </plugin>
+      
     </include>
     
   </world>

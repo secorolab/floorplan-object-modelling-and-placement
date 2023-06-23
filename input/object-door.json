@@ -4,8 +4,8 @@
             "@base": "http://exsce-floorplan.org/"
         },
         "https://comp-rob2b.github.io/metamodels/kinematic-chain/structural-entities.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-proof-of-concept/metamodel/object.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-proof-of-concept/metamodel/polytope.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/object.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope.json",
         "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
         "https://comp-rob2b.github.io/metamodels/newtonian-rigid-body-dynamics.json",
@@ -164,8 +164,8 @@
             "as-seen-by": "frame-object-door",
             "x": 0,
             "y": 0,
-            "z": 1,
-            "theta": -1.57
+            "z": 0.995,
+            "theta": 0
         },
         {
             "@id": "coord-pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
@@ -274,7 +274,7 @@
             "unit": "M",
             "x-size": 0.05,
             "y-size": 0.05,
-            "z-size": 2
+            "z-size": 1.99
         },
         {
             "@id": "inertia-door-body",
@@ -301,6 +301,30 @@
             "yy": 33.220,
             "zz": 0.0415,
             "mass": 100.0
+        },
+        {
+            "@id": "link-visual-door-body",
+            "@type": ["LinkWithPolytope", "LinkVisualRepresentation"],
+            "link": "door-body",
+            "polytope": "polytope-door-body"
+        },
+        {
+            "@id": "link-physics-door-body",
+            "@type": ["LinkWithPolytope", "LinkPhysicsRepresentation"],
+            "link": "door-body",
+            "polytope": "polytope-door-body"
+        },
+        {
+            "@id": "link-visual-door-hinge",
+            "@type": ["LinkWithPolytope", "LinkVisualRepresentation"],
+            "link": "door-hinge",
+            "polytope": "polytope-door-hinge"
+        },
+        {
+            "@id": "link-physics-door-hinge",
+            "@type": ["LinkWithPolytope", "LinkPhysicsRepresentation"],
+            "link": "door-hinge",
+            "polytope": "polytope-door-hinge"
         },
         {
             "@id": "object-link-door-body",

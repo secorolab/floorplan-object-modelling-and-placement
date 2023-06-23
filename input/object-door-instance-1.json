@@ -2,55 +2,58 @@
     "@context": [
         {
             "@base": "http://exsce-floorplan.org/",
-            "coord": "http://exsce-floorplan.org/",
-            "VectorXY": "coord:VectorXY",
-            "theta": "coord:theta"
+            "coord": "http://exsce-floorplan.org/coord#",
+            "VectorXY": "coord:VectorXY"
         },
         "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
         "https://comp-rob2b.github.io/metamodels/geometry/structural-entities.json",
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-proof-of-concept/metamodel/object.json"
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/object.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope.json",
+        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/state.json",
+        "https://comp-rob2b.github.io/metamodels/qudt.json"
     ],
     "@graph": [
         {
-            "@id": "point-location-door-2",
+            "@id": "point-location-door-1",
             "@type": "Point"
         },
         {
-            "@id": "frame-location-door-2",
+            "@id": "frame-location-door-1",
             "@type": "Frame",
-            "origin": "point-location-door-2"
+            "origin": "point-location-door-1"
         },
         {
-            "@id": "pose-frame-location-door-2",
+            "@id": "pose-frame-location-door-1",
             "@type": "Pose",
-            "of": "frame-location-door-2",
+            "of": "frame-location-door-1",
             "with-respect-to": "frame-left_long_corridor-wall-1"
         },
         {
-            "@id": "coord-pose-frame-location-door-2",
+            "@id": "coord-pose-frame-location-door-1",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
-            "of-pose": "pose-frame-location-door-2",
+            "of-pose": "pose-frame-location-door-1",
             "as-seen-by": "frame-left_long_corridor-wall-1",
             "unit": [
                 "M",
                 "degrees"
             ],
-            "theta": 0.0,
-            "x": 14.5,
+            "theta": -90.0,
+            "x": 20.50,
             "y": 0.1,
             "z": 0.0
         },
         {
-            "@id": "door-instance-2",
+            "@id": "door-instance-1",
             "@type": "ObjectInstance",
-            "frame": "frame-location-door-2",
+            "frame": "frame-location-door-1",
             "of-object": "door",
-            "world": "brsu_building_c_with_doorways"
+            "world": "brsu_building_c_with_doorways",
+            "start-state": "door-partially-opened"
         },
         {
             "@id": "world-frame-tag",

@@ -1,6 +1,6 @@
 {
     "@context": {
-        "poly": "http://exsce-floorplan.org/",
+        "poly": "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope#",
         "Polytope": "poly:Polytope",
         "3DPolytope": "poly:3DPolytope",
         "Cuboid": "poly:Cuboid",

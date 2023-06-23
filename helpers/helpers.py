@@ -46,9 +46,8 @@ def get_transformation_matrix_wrt_frame(g, root, target):
     # Build the tree
 
     pose_frame_node_tree = {}
-    # print("=====")
+
     for node, parent in ((node, parent) for (node, parent) in t_nep if parent):
-        # print(node, parent)
         pose_frame_node_tree[node] = parent
         if node == target:
             break
@@ -78,10 +77,9 @@ def get_transformation_matrix_wrt_frame(g, root, target):
         z = 0 if z_value == None else z_value.toPython()
 
         # Read the theta value, if the values is in degrees, transform to radians
-        t = g.value(current_frame_coordinates, FP["theta"]).toPython()
+        t = g.value(current_frame_coordinates, POLY["theta"]).toPython()
         if QUDT_VOCAB["degrees"] in g.objects(current_frame_coordinates, QUDT["unit"]):
             t = np.deg2rad(t)
-
         # Build the transformation matrix
         new_T = build_transformation_matrix(x, y, z, t)
 
