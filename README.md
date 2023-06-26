@@ -8,7 +8,7 @@ This tool is a companion tool for the FloorPlan DSL, which enables the modelling
 * **Model objects with movement constraits**: the tool enables the specification of objects with revolute, prismatic, or fixed joints. 
 * **Place objects in indoor environments**: by using the composable modelling approach the FloorPlan models can become scenes filled with objects with ease.
 * **Model object states**: the tool allows for finate state machines for objects with motion constraints to be modelled, as well as selecting the intial state of each object in the scene.
-* **Gazebo world generation and plugin**: the tool generates SDF format world files for gazebo, while a companion plugin sets up the scene as determined by the initial state. 
+* **Gazebo world generation and plugin**: the tool generates SDF format world files for gazebo, while a companion plugin sets up the scene as determined by the initial state. The plugin is available [here](https://github.com/hbrs-sesame/floorplan-gazebo-initial-state-plugin)
 
 ## Getting Startedith Python 3.8.10,
 
@@ -20,13 +20,9 @@ python3 main.py <input folder>
 ```
 Tested on Python 3.8.10
 
-## Tutorial
+## Tutorials
 
-A tutorial on how to model objects with movement constraints, and how to place them in floor plan models is available [here]().
-
-## Design 
-
-A write-up on the design of the this tool is available [here]()
+Tutorials on how to model objects with movement constraints, and how to place them in floor plan models is available [here](docs/tutorial.md).
 
 # Acknowledgement
 

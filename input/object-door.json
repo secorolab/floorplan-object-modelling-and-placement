@@ -330,16 +330,12 @@
             "@id": "object-link-door-body",
             "@type": "ObjectLink",
             "link": "door-body",
-            "visual-link": "polytope-door-body",
-            "physics-link": "polytope-door-body",
             "link-frame": "frame-door-body-center"
         },
         {
             "@id": "object-link-door-hinge",
             "@type": "ObjectLink",
             "link": "door-hinge",
-            "visual-link": "polytope-door-hinge",
-            "physics-link": "polytope-door-hinge",
             "link-frame": "frame-door-holder-origin"
         },
         {

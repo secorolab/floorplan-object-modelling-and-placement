@@ -4,18 +4,24 @@ The objective of the next 3 tutorials is to build an understanding of the compos
 
 ## Background 
 
-The composable model approach 
-Composable models
-FloorPlan DSL composable models
-kinematic chains
-state machine
+Composable modelling enables the creation of semantic rich models that are easily extendible and reusable. We use [JSON-LD](https://www.w3.org/TR/json-ld/) to represent our models and metamodels, as the format allows composition by linking models through unique identifiers. Composable models expressed in JSON-LD consist of a `@graph` with elements that conform to one or multiple metamodels, which are specified in a `@context`. Each element is a JSON object with a unique identifier (`@id`), a list of metamodel concepts it conforms to (`@type`), and a set of properties conforming to the metamodel concepts. For example, a composable model of a vector can be modelled by (i) giving the model a unique id, (ii) selecting the list of relevant concepts for a bound vector in 3D space, and (iii) refering to a 3D Point model for the `start` property. This model of a vector can be refered to by its identifier by another model in the graph. 
 
+```json
+    {
+        "@id": "vector-joint-door-hinge-joint-x",
+        "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
+        "start": "point-door-hinge-origin"
+    }
+```
+The FloorPlan DSL can transform the TextX models into composable models. This has the enable extending the possible applications for the models. For instance, the tool used in this tutorial is a companion tool that allows to model objects with movement constraints and place them in the indoor environments described in the FloorPlan DSL. This companion tool was developed using the [RDFLib](https://rdflib.readthedocs.io/en/stable/), which is used to navigate the graph and interpret the models. While there is no tutorial on creating such a tool, the companion tool presented in this repository is well documented can be used as a guide for developing new tools. 
+
+The companion tool presented not only consumes the composable models from the FloorPlan DSL, but also re-uses other metamodels from the ExSce workbench in oder to model dynamic objects. These are the kinematic chain metamodel and the finate state machine metamodel. The kinematic chain metamodel is used to model the motion constraints of the dynamic objects that will be placed in the indoor environments. Whereas the finate state machine metamodel is used to model the states of these dynamic objects and their transitions. At the moment the states are used to specify the starting state of an object in the simulation. While the robot can interact with the these dynamic objects, there is no dynamic change of state based on events or timers. 
 
 ## How to: Model a Door
 
 |![](../images/joints.png)|
 |:-----------------------:|
-|Figure 1: Door model |
+|Figure 1: Door model   |
 
 A door is an object with a motion constraint. It has a hinge that attaches to door to the doorway, and which constraints its movement to a swing action that allows for opening and closing. In this tutorial we will be review the modelling process to create a door with our tool.
 
@@ -23,7 +29,10 @@ A door can be modelled as a kinematic chain, with two links representing the doo
 
 The first elements to model are the geometric skeleton of the door. Those are points, vectors, and frames. For our door we need to model 5 frames: the `door-object` frame is the root of the object. This frame is later used to specify a pose in the world with an object instance. The door is made up of two links and a joint. Each link can have multiple frames associated with it. In this case, one at the center of each link (`door-holder-frame` and `door-body-frame`), and two frames of conicident origins for the joint (`door-holder-hinge` and `door-body-hinge`). For these last two, we model the frame not only as an entity with an origin point, but also its three direction vectors. This allows specifying the axis of the joint where the motion is constraint to. 
 
-![](../images/door-example-frames.png)
+
+|![](../images/door-example-frames.png)|
+|:-----------------------:|
+|Figure 2: All the frames required to model the door   |
 
 ```json
     {
@@ -74,11 +83,15 @@ These elements are the building block for the spatial relations necessary to pos
 ```
 To model the pose of each link and joint, only 4 pose descriptions are necessary, and they are illustrated here:
 
-![](../images/door-example-poses.png)
+|![](../images/door-example-poses.png)|
+|:----------------------------------:|
+|Figure 3: All the pose relations and coordinate references required for the door model.|
 
 For each link in the kinematic chain there is also inertia, visual geometry, and collision geometry information that is required. The joint of the door also requires some information about the zero configuration, its maximum and lowest values, and optinally the states that it can be. 
 
-![](../images/door-example-links-joints.png)
+|![](../images/door-example-links-joints.png)|
+|:-------------------------------------------:|
+|Figure 4: |
 
 For the link, modelling the rigid body inertia is straightforward, as it only requires calculating the values. In the simulator, in this case Gazebo, each link is represented visually and physically with a polytope. The polytope can modelled in various ways. For our example we model the polytope using the `"GazeboCuboid"` type, which describes a cuboid by its length in the x, z, and y directions. We then link this cuboid model to the visual and physics representation of the door body using the `"LinkVisualRepresentation"` and `"LinkPhysicsRepresentation"`. 
 
@@ -181,7 +194,7 @@ It might be of interest for a test that a door is at a specific state. A finite 
     },
 ```
 
-With the state definitions, we can now add an initial state to the object instance. This will add a Gazebo plugin to the SDF model so that the door is set up to the correct state at start-up. 
+With the state definitions, we can now add an initial state to the object instance. This will add a [Gazebo plugin](https://github.com/hbrs-sesame/floorplan-gazebo-initial-state-plugin) to the SDF model so that the door is set up to the correct state at start-up. 
 
 ```json
     {
