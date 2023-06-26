@@ -43,7 +43,7 @@ The first elements to model are the geometric skeleton of the door. Those are po
         "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
         "start": "point-door-hinge-origin"
     },
-    // ...
+    
     {
         "@id": "frame-joint-door-hinge",
         "@type": ["3D", "Euclidean", "Frame", "Orthonormal", "RigidBody", "RightHanded", "OriginVectorsXYZ"],
@@ -207,7 +207,7 @@ With the state definitions, we can now add an initial state to the object instan
     {
         "@id": "door-instance-2",
         "@type": "ObjectInstance",
-        // ...
+        
         "start-state": "door-fully-opened"
     }
 ```
