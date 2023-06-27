@@ -46,7 +46,15 @@ The first elements to model are the geometric skeleton of the door. Those are po
 
 {
     "@id": "frame-joint-door-hinge",
-    "@type": ["3D", "Euclidean", "Frame", "Orthonormal", "RigidBody", "RightHanded", "OriginVectorsXYZ"],
+    "@type": [
+        "3D", 
+        "Euclidean", 
+        "Frame", 
+        "Orthonormal", 
+        "RigidBody", 
+        "RightHanded", 
+        "OriginVectorsXYZ"
+        ],
     "origin": "point-joint-door-hinge-origin",
     "vector-x": "vector-joint-door-hinge-joint-x",
     "vector-y": "vector-joint-door-hinge-joint-y",
@@ -97,7 +105,12 @@ For the link, modelling the rigid body inertia is straightforward, as it only re
 ```json        
 {
     "@id": "inertia-door-body",
-    "@type":  [ "RigidBodyInertia", "Mass", "RotationalInertia", "PrincipalMomentsOfInertiaXYZ" ],
+    "@type":  [ 
+        "RigidBodyInertia", 
+        "Mass", 
+        "RotationalInertia", 
+        "PrincipalMomentsOfInertiaXYZ" 
+        ],
     "of-body": "door-body",
     "reference-point": "point-door-body-origin",
     "as-seen-by": "frame-door-body-hinge",
@@ -192,7 +205,13 @@ It might be of interest for a test that a door is at a specific state. A finite 
 },
 {
     "@id": "joint-pose-door-fully-opened",
-    "@type": [ "JointReference", "JointPosition", "RevoluteJointPosition", "RevoluteJointPositionCoordinate", "JointLowerLimit" ],
+    "@type": [ 
+        "JointReference", 
+        "JointPosition", 
+        "RevoluteJointPosition", 
+        "RevoluteJointPositionCoordinate", 
+        "JointLowerLimit" 
+        ],
     "of-joint": "joint-door-hinge",
     "quantity-kind": "Angle",
     "unit": "RAD",
