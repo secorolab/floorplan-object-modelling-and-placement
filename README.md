@@ -15,7 +15,7 @@ This tool is a companion tool for the FloorPlan DSL, which enables the modelling
 
 Install the [requirements](requirements.txt), then you may run the example:
 
-```
+```sh
 python3 main.py <input folder> 
 ```
 Tested on Python 3.8.10

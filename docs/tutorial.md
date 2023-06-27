@@ -137,7 +137,13 @@ The modelling of the joint and the rest of the kinematic chain is explained in m
 |:--------------------------------------:|
 |Figure 5: frames and pose modelled to place an object instance in the world |
 
-Placing a door instance in the simulation world is simple. We first model a frame with its origin. This frame is co-located with the object frame of the object instance, and by specifying a pose to this frame we can give a pose to the object instance in the world. Modelling a pose works in the same way as in modelling the object: we model a coordinate free pose, and then link to it to specify coordinates. Since we are using the composable models, we can use any frame from the FloorPlan DSL model to specify the pose relation.
+Placing a door instance in the simulation world is simple. We first model a frame with its origin. This frame is co-located with the object frame of the object instance, and by specifying a pose to this frame we can give a pose to the object instance in the world. Modelling a pose works in the same way as in modelling the object: we model a coordinate free pose, and then link to it to specify coordinates. Since we are using the composable models, we can use any frame from the FloorPlan DSL model to specify the pose relation. We can get the composable models from the FloorPlan DSL by using the TextX generator: 
+
+```sh
+textx generate <model_path> --target json-ld
+```
+
+We can then model the pose relation using one of the frames of the floor plan model, in this case `frame-left_long_corridor-wall-1`:
 
 ```json
     {

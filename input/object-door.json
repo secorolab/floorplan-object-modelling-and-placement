@@ -327,6 +327,22 @@
             "polytope": "polytope-door-hinge"
         },
         {
+            "@id": "gazebo-link-door-body-representation",
+            "@type": "GazeboLinkRepresentation",
+            "visual": "link-visual-door-body",
+            "collision": "link-physics-door-body",
+            "inertia": "inertia-door-body",
+            "material": "DarkYellow"
+        },
+        {
+            "@id": "gazebo-link-door-hinge-representation",
+            "@type": "GazeboLinkRepresentation",
+            "visual": "link-visual-door-hinge",
+            "collision": "link-physics-door-hinge",
+            "inertia": "inertia-door-hinge",
+            "material": "Yellow"
+        },
+        {
             "@id": "object-link-door-body",
             "@type": "ObjectLink",
             "link": "door-body",
