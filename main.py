@@ -51,35 +51,40 @@ if __name__ == "__main__":
     
     fp_model_name = ''
     for floorplan in g.subjects(RDF.type, FP["FloorPlan"]):
-        fp_model_name = prefixed(g, floorplan).split('fp:')[1]
+        fp_model_name = prefixed(g, floorplan).split('floorplan:')[1]
 
     for my_object, _, _ in g.triples((None, RDF.type, OBJ["Object"])):
-        print(my_object)
         joint_list = []
         link_list = []
 
         object_frame = g.value(my_object, OBJ["object-frame"])
-
+        
         # Collect the link information
         for _, _, link in g.triples((my_object, OBJ["object-links"], None)):
 
+            gazebo_representation = g.value(predicate=GZB["gz-link"], object=link)
+            
             # Get the objects for the link geometry
-            visual_link = g.value(link, OBJ["visual-link"])
-            physics_link = g.value(link, OBJ["physics-link"])
-            simplices_link = g.value(link, OBJ["link"])
+            visual = g.value(gazebo_representation, GZB["visual"])
+            visual_link = g.value(visual, OBJ["polytope"])
+            collision = g.value(gazebo_representation, GZB["collision"])
+            physics_link = g.value(collision, OBJ["polytope"])
+            inertia = g.value(gazebo_representation, GZB["inertia"])
+            material = g.value(gazebo_representation, GZB["material"])
+            simplices_link = g.value(visual, OBJ["link"])
 
             # Get the sdf geometry description
             sdf_visual_geometry = get_sdf_geometry(g, visual_link)
             sdf_physics_geometry = get_sdf_geometry(g, physics_link)
             
             # Get the sdf inertia description
-            sdf_inertia = {}
-            for inertia in g.subjects(RBD["of-body"], simplices_link):
-                sdf_inertia = get_sdf_intertia(g, inertia)
+            sdf_inertia = get_sdf_intertia(g, inertia)
+            # for inertia in g.subjects(RBD["of-body"], simplices_link):
+            #     sdf_inertia = get_sdf_intertia(g, inertia)
 
             # Get the frame for the link
             link_frame = g.value(link, OBJ["link-frame"])
-            #print(link_frame, object_frame)
+            
             T = get_transformation_matrix_wrt_frame(g, link_frame, object_frame)
             pose_coordinates = get_sdf_pose_from_transformation_matrix(T)
 
@@ -91,7 +96,8 @@ if __name__ == "__main__":
                 "inertial": sdf_inertia,
                 "collision": sdf_physics_geometry,
                 "visual": sdf_visual_geometry,
-                "name" : prefixed(g, simplices_link)
+                "name" : prefixed(g, simplices_link),
+                "material": material.toPython()
             })
                 
         # If the object is a kinematic chain, collect the joint information
@@ -213,12 +219,13 @@ if __name__ == "__main__":
         instance = {
             "pose": pose_coordinates,
             "static": "false",
-            "name": prefixed(g, of_obj)[3:],
-            "instance_name": prefixed(g, instance)[3:],
+            "name": prefixed(g, of_obj)[5:],
+            "instance_name": prefixed(g, instance)[5:],
             "start_joint_states": start_joint_states
         }
+
         data["instances"].append(instance)
-        data["model_name"] = prefixed(g, world)[3:]
+        data["model_name"] = prefixed(g, world)[10:]
         data["world_name"] = "{}_with_objects".format(prefixed(g, world))
 
     # Build and write the sdf world

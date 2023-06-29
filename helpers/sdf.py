@@ -77,7 +77,7 @@ def write_object_model_sdf(data, output_folder):
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
     
-    name_without_id = data["name"][3:]
+    name_without_id = data["name"][5:]
     full_path = os.path.join(output_folder, name_without_id)
 
     if not os.path.exists(full_path):
@@ -101,7 +101,7 @@ def write_world_model_sdf(data, output_folder):
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
 
-    name_without_id = data["world_name"][3:]
+    name_without_id = data["world_name"][10:]
     
     full_path = os.path.join(output_folder, name_without_id)
     if not os.path.exists(full_path):

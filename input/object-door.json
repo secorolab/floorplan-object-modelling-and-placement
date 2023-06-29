@@ -1,267 +1,269 @@
 {
     "@context": [
         {
-            "@base": "http://exsce-floorplan.org/"
+            "door": "https://hbrs-sesame.github.io/models/door#"
         },
-        "https://comp-rob2b.github.io/metamodels/kinematic-chain/structural-entities.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/object.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope.json",
+        "https://comp-rob2b.github.io/metamodels/geometry/structural-entities.json",
         "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
-        "https://comp-rob2b.github.io/metamodels/newtonian-rigid-body-dynamics.json",
+        "https://hbrs-sesame.github.io/metamodels/geometry/polytope.json",
+        "https://comp-rob2b.github.io/metamodels/kinematic-chain/structural-entities.json",
+        "https://comp-rob2b.github.io/metamodels/kinematic-chain/state.json",
         "https://comp-rob2b.github.io/metamodels/qudt.json",
-        "https://comp-rob2b.github.io/metamodels/geometry/structural-entities.json",
-        "https://comp-rob2b.github.io/metamodels/kinematic-chain/state.json"
+        "https://comp-rob2b.github.io/metamodels/newtonian-rigid-body-dynamics.json",
+        "https://hbrs-sesame.github.io/metamodels/floor-plan/object.json",
+        "https://hbrs-sesame.github.io/metamodels/simulation/gazebo.json",
+        "https://hbrs-sesame.github.io/metamodels/geometry/coordinate-extension.json"
     ],
     "@graph": [ 
         {
-            "@id": "point-door-holder-origin",
+            "@id": "door:point-door-holder-origin",
             "@type": [ "3D", "Euclidean", "Point" ]
         },
         {
-            "@id": "point-joint-door-hinge-origin",
+            "@id": "door:point-joint-door-hinge-origin",
             "@type": [ "3D", "Euclidean", "Point" ]
         },
         {
-            "@id": "point-door-body-origin",
+            "@id": "door:point-door-body-origin",
             "@type": [ "3D", "Euclidean", "Point" ]
         },
         {
-            "@id": "point-object-door-origin",
+            "@id": "door:point-object-door-origin",
             "@type": [ "3D", "Euclidean", "Point" ]
         },
         {
-            "@id": "point-door-body-center-origin",
+            "@id": "door:point-door-body-center-origin",
             "@type": [ "3D", "Euclidean", "Point" ]
         },
         {
-            "@id": "frame-object-door",
+            "@id": "door:frame-object-door",
             "@type": "Frame",
-            "origin": "point-object-door-origin"
+            "origin": "door:point-object-door-origin"
         },
         {
-            "@id": "frame-door-body-center",
+            "@id": "door:frame-door-body-center",
             "@type": "Frame",
-            "origin": "point-door-body-center-origin"
+            "origin": "door:point-door-body-center-origin"
         },
         {
-            "@id": "vector-joint-door-hinge-joint-x",
+            "@id": "door:vector-joint-door-hinge-joint-x",
             "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
-            "start": "point-door-hinge-origin"
+            "start": "door:point-door-hinge-origin"
         },
         {
-            "@id": "vector-joint-door-hinge-joint-y",
+            "@id": "door:vector-joint-door-hinge-joint-y",
             "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
-            "start": "point-door-hinge-origin"
+            "start": "door:point-door-hinge-origin"
         },
         {
-            "@id": "vector-joint-door-hinge-joint-z",
+            "@id": "door:vector-joint-door-hinge-joint-z",
             "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
-            "start": "point-door-hinge-origin"
+            "start": "door:point-door-hinge-origin"
         },
         {
-            "@id": "vector-door-body-origin-x",
+            "@id": "door:vector-door-body-origin-x",
             "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
-            "start": "point-door-body-origin"
+            "start": "door:point-door-body-origin"
         },
         {
-            "@id": "vector-door-body-origin-y",
+            "@id": "door:vector-door-body-origin-y",
             "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
-            "start": "point-door-body-origin"
+            "start": "door:point-door-body-origin"
         },
         {
-            "@id": "vector-door-body-origin-z",
+            "@id": "door:vector-door-body-origin-z",
             "@type": [ "3D", "Euclidean", "Vector", "BoundVector", "UnitLength" ],
-            "start": "point-door-body-origin"
+            "start": "door:point-door-body-origin"
         },
         {
-            "@id": "frame-door-holder-origin",
+            "@id": "door:frame-door-holder-origin",
             "@type": [ "3D", "Euclidean", "Frame", "Orthonormal", "RigidBody", "RightHanded" ],
-            "origin": "point-door-holder-origin"
+            "origin": "door:point-door-holder-origin"
         },
         {
-            "@id": "frame-joint-door-hinge",
+            "@id": "door:frame-joint-door-hinge",
             "@type": ["3D", "Euclidean", "Frame", "Orthonormal", "RigidBody", "RightHanded", "OriginVectorsXYZ"],
-            "origin": "point-joint-door-hinge-origin",
-            "vector-x": "vector-joint-door-hinge-joint-x",
-            "vector-y": "vector-joint-door-hinge-joint-y",
-            "vector-z": "vector-joint-door-hinge-joint-z"
+            "origin": "door:point-joint-door-hinge-origin",
+            "vector-x": "door:vector-joint-door-hinge-joint-x",
+            "vector-y": "door:vector-joint-door-hinge-joint-y",
+            "vector-z": "door:vector-joint-door-hinge-joint-z"
         },
         {
-            "@id": "frame-door-body-hinge",
+            "@id": "door:frame-door-body-hinge",
             "@type": ["3D", "Euclidean", "Frame", "Orthonormal", "RigidBody", "RightHanded", "OriginVectorsXYZ"],
-            "origin": "point-door-body-origin",
-            "vector-x": "vector-door-body-origin-x",
-            "vector-y": "vector-door-body-origin-y",
-            "vector-z": "vector-door-body-origin-z"
+            "origin": "door:point-door-body-origin",
+            "vector-x": "door:vector-door-body-origin-x",
+            "vector-y": "door:vector-door-body-origin-y",
+            "vector-z": "door:vector-door-body-origin-z"
         },
         {
-            "@id": "door-hinge",
+            "@id": "door:door-hinge",
             "@type": [ "SimplicialComplex", "RigidBody" ],
             "simplices": [
-                "frame-door-holder-origin",
-                "frame-joint-door-hinge",
-                "point-joint-door-hinge-origin",
-                "vector-joint-door-hinge-joint-x",
-                "vector-joint-door-hinge-joint-y",
-                "vector-joint-door-hinge-joint-z"
+                "door:frame-door-holder-origin",
+                "door:frame-joint-door-hinge",
+                "door:point-joint-door-hinge-origin",
+                "door:vector-joint-door-hinge-joint-x",
+                "door:vector-joint-door-hinge-joint-y",
+                "door:vector-joint-door-hinge-joint-z"
             ]
         },
         {
             "@id": "door-body",
             "@type": [ "SimplicialComplex", "RigidBody" ],
             "simplices": [
-                "frame-door-body-hinge",
-                "point-door-body-origin",
-                "vector-door-body-origin-x",
-                "vector-door-body-origin-y",
-                "vector-door-body-origin-z"
+                "door:frame-door-body-hinge",
+                "door:point-door-body-origin",
+                "door:vector-door-body-origin-x",
+                "door:vector-door-body-origin-y",
+                "door:vector-door-body-origin-z"
             ]
         },
         {
-            "@id": "pose-frame-door-holder-wrt-frame-object-door",
+            "@id": "door:pose-frame-door-holder-wrt-frame-object-door",
             "@type": "Pose",
-            "of": "frame-door-holder-origin",
-            "with-respect-to": "frame-object-door"
+            "of": "door:frame-door-holder-origin",
+            "with-respect-to": "door:frame-object-door"
         },
         {
-            "@id": "pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
+            "@id": "door:pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
             "@type": "Pose",
-            "of": "frame-joint-door-hinge",
-            "with-respect-to": "frame-door-holder-origin",
+            "of": "door:frame-joint-door-hinge",
+            "with-respect-to": "door:frame-door-holder-origin",
             "quantity-kind": [ "Angle", "Length" ]
         },
         {
-            "@id": "pose-frame-door-body-origin-wrt-frame-joint-door-hinge",
+            "@id": "door:pose-frame-door-body-origin-wrt-frame-joint-door-hinge",
             "@type": "Pose",
-            "of": "frame-door-body-hinge",
-            "with-respect-to": "frame-joint-door-hinge",
+            "of": "door:frame-door-body-hinge",
+            "with-respect-to": "door:frame-joint-door-hinge",
             "quantity-kind": [ "Angle", "Length" ]
         },
         {
-            "@id": "offset-frame-joint-door-hinge",
+            "@id": "door:offset-frame-joint-door-hinge",
             "@type": "Position",
-            "of": "point-door-body-origin",
-            "with-respect-to": "point-joint-door-hinge-origin",
+            "of": "door:point-door-body-origin",
+            "with-respect-to": "door:point-joint-door-hinge-origin",
             "quantity-kind": "Length"
         },
         {
-            "@id": "pose-frame-door-body-center-wrt-frame-door-body-origin",
+            "@id": "door:pose-frame-door-body-center-wrt-frame-door-body-origin",
             "@type": "Pose",
-            "of": "frame-door-body-center",
-            "with-respect-to": "frame-door-body-hinge",
+            "of": "door:frame-door-body-center",
+            "with-respect-to": "door:frame-door-body-hinge",
             "quantity-kind": [ "Angle", "Length" ]
         },
         {
-            "@id": "coord-pose-frame-door-holder-wrt-frame-object-door",
+            "@id": "door:coord-pose-frame-door-holder-wrt-frame-object-door",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
             "unit": ["M", "RAD"],
-            "of-pose": "pose-frame-door-holder-wrt-frame-object-door",
-            "as-seen-by": "frame-object-door",
+            "of-pose": "door:pose-frame-door-holder-wrt-frame-object-door",
+            "as-seen-by": "door:frame-object-door",
             "x": 0,
             "y": 0,
             "z": 0.995,
             "theta": 0
         },
         {
-            "@id": "coord-pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
+            "@id": "door:coord-pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
             "unit": ["M", "RAD"],
-            "of-pose": "pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
-            "as-seen-by": "frame-door-holder-origin",
+            "of-pose": "door:pose-frame-joint-door-hinge-wrt-frame-door-holder-origin",
+            "as-seen-by": "door:frame-door-holder-origin",
             "x": -0.025,
             "y": 0.025,
             "z": 0,
             "theta": 0
         },
         {
-            "@id": "coord-pose-frame-door-body-origin-wrt-frame-joint-door-hinge",
+            "@id": "door:coord-pose-frame-door-body-origin-wrt-frame-joint-door-hinge",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
             "unit": ["M", "RAD"],
-            "of-pose": "pose-frame-door-body-origin-wrt-frame-joint-door-hinge",
-            "as-seen-by": "frame-joint-door-hinge",
+            "of-pose": "door:pose-frame-door-body-origin-wrt-frame-joint-door-hinge",
+            "as-seen-by": "door:frame-joint-door-hinge",
             "x": 0,
             "y": 0,
             "z": 0,
             "theta": 0
         },
         {
-            "@id": "coord-pose-frame-door-body-center-wrt-frame-door-body-origin",
+            "@id": "door:coord-pose-frame-door-body-center-wrt-frame-door-body-origin",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
             "unit": ["M", "RAD"],
-            "of-pose": "pose-frame-door-body-center-wrt-frame-door-body-origin",
-            "as-seen-by": "frame-door-body-hinge",
+            "of-pose": "door:pose-frame-door-body-center-wrt-frame-door-body-origin",
+            "as-seen-by": "door:frame-door-body-hinge",
             "x": 0.025,
             "y": 0.465,
             "z": 0.005,
             "theta": 0
         },
         {
-            "@id": "common-axis-door-hinge",
+            "@id": "door:common-axis-door-hinge",
             "@type": "LineCollinearity",
-            "lines": ["vector-joint-door-hinge-joint-z", "vector-door-body-origin-z"]
+            "lines": ["door:vector-joint-door-hinge-joint-z", "door:vector-door-body-origin-z"]
         },
         {
-            "@id": "joint-door-hinge",
+            "@id": "door:joint-door-hinge",
             "@type": [ "Joint", "RevoluteJoint", "RevoluteJointWithPolarity"],
-            "between-attachments": ["door-hinge", "door-body"],
-            "common-axis": "common-axis-door-hinge",
-            "origin-offset": "offset-frame-joint-door-hinge",
-            "positive-direction": "vector-door-body-origin-z",
+            "between-attachments": ["door:door-hinge", "door:door-body"],
+            "common-axis": "door:common-axis-door-hinge",
+            "origin-offset": "door:offset-frame-joint-door-hinge",
+            "positive-direction": "door:vector-door-body-origin-z",
             "handedness": "RightHanded"
         },
         {
-            "@id": "joint-door-hinge-tree",
+            "@id": "door:joint-door-hinge-tree",
             "@type": "JointWithTree",
-            "joint-without-tree": "joint-door-hinge",
-            "parent": "door-hinge",
-            "children": ["door-body"]
+            "joint-without-tree": "door:joint-door-hinge",
+            "parent": "door:door-hinge",
+            "children": ["door:door-body"]
         },
         {
-            "@id": "kinematic-chain-door",
+            "@id": "door:kinematic-chain-door",
             "@type": "KinematicChain",
-            "joints": ["joint-door-hinge"]
+            "joints": ["door:joint-door-hinge"]
         },
         {
-            "@id": "zero-configuration-joint-door-hinge",
+            "@id": "door:zero-configuration-joint-door-hinge",
             "@type": [ "JointZeroConfiguration", "JointZeroConfigurationWithCoincidence" ],
-            "of-joint": "joint-door-hinge",
-            "coincidence-of": [ "vector-joint-door-hinge-joint-x", "vector-door-body-origin-x"]
+            "of-joint": "door:joint-door-hinge",
+            "coincidence-of": [ "door:vector-joint-door-hinge-joint-x", "door:vector-door-body-origin-x"]
         },
         {
-            "@id": "joint-lower-limit-door-hinge",
+            "@id": "door:joint-lower-limit-door-hinge",
             "@type": [ "JointReference", "JointPosition", "RevoluteJointPosition", "RevoluteJointPositionCoordinate", "JointLowerLimit" ],
-            "of-joint": "joint-door-hinge",
+            "of-joint": "door:joint-door-hinge",
             "quantity-kind": "Angle",
             "unit": "RAD",
             "value": 0.0
         },
         {
-            "@id": "joint-upper-limit-door-hinge",
+            "@id": "door:joint-upper-limit-door-hinge",
             "@type": [ "JointReference", "JointPosition", "RevoluteJointPosition", "RevoluteJointPositionCoordinate",  "JointUpperLimit" ],
-            "of-joint": "joint-door-hinge",
+            "of-joint": "door:joint-door-hinge",
             "quantity-kind": "Angle",
             "unit": "RAD",
             "value": 2.0
         },
         {
-            "@id": "polytope-door-body",
+            "@id": "door:polytope-door-body",
             "@type": ["Polytope", "3DPolytope", "CuboidWithSize"],
             "unit": "M",
             "x-size": 0.05,
@@ -269,7 +271,7 @@
             "z-size": 1.98
         },
         {
-            "@id": "polytope-door-hinge",
+            "@id": "door:polytope-door-hinge",
             "@type": ["Polytope", "3DPolytope", "CuboidWithSize"],
             "unit": "M",
             "x-size": 0.05,
@@ -277,11 +279,11 @@
             "z-size": 1.99
         },
         {
-            "@id": "inertia-door-body",
+            "@id": "door:inertia-door-body",
             "@type":  [ "RigidBodyInertia", "Mass", "RotationalInertia", "PrincipalMomentsOfInertiaXYZ" ],
-            "of-body": "door-body",
-            "reference-point": "point-door-body-origin",
-            "as-seen-by": "frame-door-body-hinge",
+            "of-body": "door:door-body",
+            "reference-point": "door:point-door-body-origin",
+            "as-seen-by": "door:frame-door-body-hinge",
             "quantity-kind": [ "MomentOfInertia", "Mass" ],
             "unit": [ "KiloGM-M2", "KiloGM" ],
             "xx": 0.4069,
@@ -290,11 +292,11 @@
             "mass": 1.0
         },
         {
-            "@id": "inertia-door-hinge",
+            "@id": "door:inertia-door-hinge",
             "@type":  [ "RigidBodyInertia", "Mass", "RotationalInertia", "PrincipalMomentsOfInertiaXYZ" ],
-            "of-body": "door-hinge",
-            "reference-point": "point-door-holder-origin",
-            "as-seen-by": "frame-door-holder-origin",
+            "of-body": "door:door-hinge",
+            "reference-point": "door:point-door-holder-origin",
+            "as-seen-by": "door:frame-door-holder-origin",
             "quantity-kind": [ "MomentOfInertia", "Mass" ],
             "unit": [ "KiloGM-M2", "KiloGM" ],
             "xx": 33.220,
@@ -303,63 +305,65 @@
             "mass": 100.0
         },
         {
-            "@id": "link-visual-door-body",
+            "@id": "door:link-visual-door-body",
+            "link": "door:door-body",
             "@type": ["LinkWithPolytope", "LinkVisualRepresentation"],
-            "link": "door-body",
-            "polytope": "polytope-door-body"
+            "polytope": "door:polytope-door-body"
         },
         {
-            "@id": "link-physics-door-body",
+            "@id": "door:link-physics-door-body",
             "@type": ["LinkWithPolytope", "LinkPhysicsRepresentation"],
-            "link": "door-body",
-            "polytope": "polytope-door-body"
+            "link": "door:door-body",
+            "polytope": "door:polytope-door-body"
         },
         {
-            "@id": "link-visual-door-hinge",
+            "@id": "door:link-visual-door-hinge",
             "@type": ["LinkWithPolytope", "LinkVisualRepresentation"],
-            "link": "door-hinge",
-            "polytope": "polytope-door-hinge"
+            "link": "door:door-hinge",
+            "polytope": "door:polytope-door-hinge"
         },
         {
-            "@id": "link-physics-door-hinge",
+            "@id": "door:link-physics-door-hinge",
             "@type": ["LinkWithPolytope", "LinkPhysicsRepresentation"],
-            "link": "door-hinge",
-            "polytope": "polytope-door-hinge"
+            "link": "door:door-hinge",
+            "polytope": "door:polytope-door-hinge"
         },
         {
-            "@id": "gazebo-link-door-body-representation",
-            "@type": "GazeboLinkRepresentation",
-            "visual": "link-visual-door-body",
-            "collision": "link-physics-door-body",
-            "inertia": "inertia-door-body",
-            "material": "DarkYellow"
-        },
-        {
-            "@id": "gazebo-link-door-hinge-representation",
-            "@type": "GazeboLinkRepresentation",
-            "visual": "link-visual-door-hinge",
-            "collision": "link-physics-door-hinge",
-            "inertia": "inertia-door-hinge",
-            "material": "Yellow"
-        },
-        {
-            "@id": "object-link-door-body",
+            "@id": "door:object-link-door-body",
             "@type": "ObjectLink",
-            "link": "door-body",
-            "link-frame": "frame-door-body-center"
+            "link": "door:door-body",
+            "link-frame": "door:frame-door-body-center"
         },
         {
-            "@id": "object-link-door-hinge",
+            "@id": "door:object-link-door-hinge",
             "@type": "ObjectLink",
-            "link": "door-hinge",
-            "link-frame": "frame-door-holder-origin"
+            "link": "door:door-hinge",
+            "link-frame": "door:frame-door-holder-origin"
         },
         {
-            "@id": "door",
+            "@id": "door:gazebo-link-door-body-representation",
+            "@type": "GazeboLinkRepresentation",
+            "visual": "door:link-visual-door-body",
+            "collision": "door:link-physics-door-body",
+            "inertia": "door:inertia-door-body",
+            "material": "DarkYellow",
+            "gz-link": "door:object-link-door-body"
+        },
+        {
+            "@id": "door:gazebo-link-door-hinge-representation",
+            "@type": "GazeboLinkRepresentation",
+            "visual": "door:link-visual-door-hinge",
+            "collision": "door:link-physics-door-hinge",
+            "inertia": "door:inertia-door-hinge",
+            "material": "Yellow",
+            "gz-link": "door:object-link-door-hinge"
+        },
+        {
+            "@id": "door:door",
             "@type": ["Object", "ObjectWithKinematicChain"],
-            "kinematic-chain": "kinematic-chain-door",
-            "object-frame": "frame-object-door",
-            "object-links": ["object-link-door-body", "object-link-door-hinge"]
+            "kinematic-chain": "door:kinematic-chain-door",
+            "object-frame": "door:frame-object-door",
+            "object-links": ["door:object-link-door-body", "door:object-link-door-hinge"]
         }
     ]
 }

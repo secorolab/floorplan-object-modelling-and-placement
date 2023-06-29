@@ -1,43 +1,44 @@
 {
     "@context": [
         {
-            "@base": "http://exsce-floorplan.org/",
-            "coord": "http://exsce-floorplan.org/coord#",
-            "VectorXY": "coord:VectorXY"
+            "door": "https://hbrs-sesame.github.io/models/door#",
+            "geom": "https://comp-rob2b.github.io/metamodels/geometry/structural-entities#",
+            "floorplan": "https://hbrs-sesame.github.io/metamodels/floorplan#"
         },
         "https://comp-rob2b.github.io/metamodels/geometry/spatial-relations.json",
         "https://comp-rob2b.github.io/metamodels/geometry/structural-entities.json",
         "https://comp-rob2b.github.io/metamodels/geometry/coordinates.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/object.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/polytope.json",
-        "file:///home/samuel/Documents/SESAME/dynamic-dsl/object-extension/metamodel/state.json",
-        "https://comp-rob2b.github.io/metamodels/qudt.json"
+        "https://hbrs-sesame.github.io/metamodels/floor-plan/object.json",
+        "https://hbrs-sesame.github.io/metamodels/geometry/polytope.json",
+        "https://hbrs-sesame.github.io/metamodels/floor-plan/state.json",
+        "https://comp-rob2b.github.io/metamodels/qudt.json",
+        "https://hbrs-sesame.github.io/metamodels/geometry/coordinate-extension.json"
     ],
     "@graph": [
         {
-            "@id": "point-location-door-1",
+            "@id": "geom:point-location-door-1",
             "@type": "Point"
         },
         {
-            "@id": "frame-location-door-1",
+            "@id": "geom:frame-location-door-1",
             "@type": "Frame",
-            "origin": "point-location-door-1"
+            "origin": "geom:point-location-door-1"
         },
         {
-            "@id": "pose-frame-location-door-1",
+            "@id": "door:pose-frame-location-door-1",
             "@type": "Pose",
-            "of": "frame-location-door-1",
-            "with-respect-to": "frame-left_long_corridor-wall-1"
+            "of": "geom:frame-location-door-1",
+            "with-respect-to": "geom:frame-left_long_corridor-wall-1"
         },
         {
-            "@id": "coord-pose-frame-location-door-1",
+            "@id": "door:coord-pose-frame-location-door-1",
             "@type": [
                 "PoseReference",
                 "PoseCoordinate",
                 "VectorXYZ"
             ],
-            "of-pose": "pose-frame-location-door-1",
-            "as-seen-by": "frame-left_long_corridor-wall-1",
+            "of-pose": "door:pose-frame-location-door-1",
+            "as-seen-by": "geom:frame-left_long_corridor-wall-1",
             "unit": [
                 "M",
                 "degrees"
@@ -48,17 +49,17 @@
             "z": 0.0
         },
         {
-            "@id": "door-instance-1",
+            "@id": "door:door-instance-1",
             "@type": "ObjectInstance",
-            "frame": "frame-location-door-1",
-            "of-object": "door",
-            "world": "brsu_building_c_with_doorways",
-            "start-state": "door-partially-opened"
+            "frame": "geom:frame-location-door-1",
+            "of-object": "door:door",
+            "world": "floorplan:brsu_building_c_with_doorways",
+            "start-state": "door:door-partially-opened"
         },
         {
             "@id": "world-frame-tag",
             "@type": "WorldFrame",
-            "frame": "world-frame"
+            "frame": "geom:world-frame"
         }
     ]
 }

@@ -32,6 +32,9 @@
 <geometry>
 {{geometry_macro(data.visual)}}
 </geometry>
+{%- if data.material != None -%}
+<material><script><name>Gazebo/{{data.material}}</name></script></material>
+{%- endif -%}
 </visual>
 </link>
 {%- endmacro -%}
