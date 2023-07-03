@@ -15,7 +15,7 @@ Composable modelling enables the creation of semantic rich models that are easil
 ```
 The FloorPlan DSL can transform the TextX models into composable models. This has the ability to extend the possible applications for the models. For instance, the tool used in this tutorial is a companion tool that allows to model objects with movement constraints and place them in the indoor environments described in the FloorPlan DSL. This companion tool was developed using the [RDFLib](https://rdflib.readthedocs.io/en/stable/), which is used to navigate the graph and interpret the models. While there is no tutorial on creating such a tool, the companion tool presented in this repository is well documented and can be used as a guide for developing new tools.
 
-The companion tool presented not only consumes the composable models from the FloorPlan DSL, but also re-uses other metamodels from the ExSce workbench in order to model dynamic objects. These are the kinematic chain metamodel and the finite state machine metamodel. The kinematic chain metamodel is used to model the motion constraints of the dynamic objects that will be placed in the indoor environments. Whereas the finite state machine metamodel is used to model the states of these dynamic objects and their transitions. At the moment the states are used to specify the starting state of an object in the simulation. While the robot can interact with these dynamic objects, there is no dynamic change of state based on events or timers.
+The companion tool presented not only consumes the composable models from the FloorPlan DSL, but also re-uses other metamodels from the ExSce workbench in order to model dynamic objects. These are the kinematic chain metamodel and the finite state machine metamodel. The kinematic chain metamodel is used to model the motion constraints of the dynamic objects that will be placed in the indoor environments. Whereas the finite state machine metamodel is used to model the states of these dynamic objects and their transitions. The states are used to specify the starting state of an object in the simulation. While the robot can interact with these dynamic objects, there is no dynamic change of state based on events or timers.
 
 ## How to: Model a Door
 
@@ -25,7 +25,7 @@ The companion tool presented not only consumes the composable models from the Fl
 
 A door is an object with a motion constraint. It has a hinge that attaches the door to the doorway, and which constraints its movement to a swing action that allows for opening and closing. In this tutorial we will review the modelling process to create a door with our tool.
 
-A door can be modelled as a kinematic chain, with two links representing the doorway and the door itself. A revolute joint represents the hinge, and it joins the two links and constrains the movement of the door with regards to the doorway.
+A door can be modelled as a kinematic chain, with two links representing the doorway and the door itself. A revolute joint represents the hinge, and it joins the two links and constrains the movement of the door with regards to the doorway. All the following model snippets, as well as the complete json-ld model of the door is available [here](../input/object-door.json).
 
 The first elements to model are the geometric skeleton of the door. Those are points, vectors, and frames. For our door we need to model 5 frames: the `door-object` frame is the root of the object. This frame is later used to specify a pose in the world with an object instance. The door is made up of two links and a joint. Each link can have multiple frames associated with it. In this case, one at the centre of each link (`door-holder-frame` and `door-body-frame`), and two frames of coincident origins for the joint (`door-holder-hinge` and `door-body-hinge`). For these last two, we model the frame not only as an entity with an origin point, but also its three direction vectors. This allows specifying the axis of the joint where the motion is constrained to.
 
@@ -100,7 +100,7 @@ For each link in the kinematic chain there is also inertia, visual geometry, and
 |:-------------------------------------------:|
 |Figure 4: models required for each link and joint in the kinematic chain|
 
-For the link, modelling the rigid body inertia is straightforward, as it only requires calculating the values. In the simulator, in this case Gazebo, each link is represented visually and physically with a polytope. The polytope can be modelled in various ways. For our example we model the polytope using the `"GazeboCuboid"` type, which describes a cuboid by its length in the x, z, and y directions. We then link this cuboid model to the visual and physics representation of the door body using the `"LinkVisualRepresentation"` and `"LinkPhysicsRepresentation"`.
+For the link, we must model the rigid body inertia. This is straightforward as it only requires calculating the moment of inertia values, for which there are calculator tools available. In the simulator, in this case Gazebo, each link is represented visually and physically with a polytope. The polytope can be modelled in various ways. For our example we model the polytope using the `"GazeboCuboid"` type, which describes a cuboid by its length in the x, z, and y directions. We then link this cuboid model to the visual and physics representation of the door body using the `"LinkVisualRepresentation"` and `"LinkPhysicsRepresentation"`.
 
 ```json        
 {
@@ -142,6 +142,7 @@ For the link, modelling the rigid body inertia is straightforward, as it only re
     "polytope": "polytope-door-body"
 }
 ```
+
 The modelling of the joint and the rest of the kinematic chain is explained in more detail in [this tutorial](https://github.com/hbrs-sesame/modelling-tutorial#kinematic-chain). 
 
 ## How to: Place an object in the FloorPlan
@@ -150,30 +151,63 @@ The modelling of the joint and the rest of the kinematic chain is explained in m
 |:--------------------------------------:|
 |Figure 5: frames and pose modelled to place an object instance in the world |
 
-Placing a door instance in the simulation world is simple. We first model a frame with its origin. This frame is co-located with the object frame of the object instance, and by specifying a pose to this frame we can give a pose to the object instance in the world. Modelling a pose works in the same way as in modelling the object: we model a coordinate free pose, and then link to it to specify coordinates. Since we are using the composable models, we can use any frame from the FloorPlan DSL model to specify the pose relation. We can get the composable models from the FloorPlan DSL by using the TextX generator: 
+Placing an object instance in the simulation world requires modelling a new frame of reference. We model a frame with its origin, where the frame is co-located with the object frame of the object instance. This way, by specifying a pose to this frame of reference we can give a pose to the object instance in the world. This relation between the frame of reference of the instance and the object frame of the object is implicit and is enforced by the script that interprets the models. For now we only need to model the frame of reference, and later refer to it when modelling the object instance. The instance placement model is available [here](../input/object-door-instance-1.json), and is the source for the following snippets.
+
+```json
+{
+    "@id": "geom:point-location-door-1",
+    "@type": "Point"
+},
+{
+    "@id": "geom:frame-location-door-1",
+    "@type": "Frame",
+    "origin": "geom:point-location-door-1"
+},
+```
+
+Since we are using the composable models, we can use any frame from the FloorPlan DSL model to specify the pose relation. For instance, the frame of id `frame-left_long_corridor-wall-1` comes from the floor plan model. We can obtain the composable models from the FloorPlan DSL by using the TextX generator: 
 
 ```sh
 textx generate <model_path> --target json-ld
 ```
 
-We can then model the pose relation using one of the frames of the floor plan model, in this case `frame-left_long_corridor-wall-1`:
+We can then model the pose relation using one of the frames of the floor plan model. 
+Modelling a pose works in the same way as in modelling the object: we model a coordinate free pose, and then link to it to specify coordinates. 
 
 ```json
 {
-    "@id": "pose-frame-location-door-2",
+    "@id": "pose-frame-location-door-1",
     "@type": "Pose",
-    "of": "frame-location-door-2",
+    "of": "frame-location-door-1",
     "with-respect-to": "frame-left_long_corridor-wall-1"
 }
+{
+    "@id": "door:coord-pose-frame-location-door-1",
+    "@type": [
+        "PoseReference",
+        "PoseCoordinate",
+        "VectorXYZ"
+    ],
+    "of-pose": "door:pose-frame-location-door-1",
+    "as-seen-by": "geom:frame-left_long_corridor-wall-1",
+    "unit": [
+        "M",
+        "degrees"
+    ],
+    "theta": -90.0,
+    "x": 20.50,
+    "y": 0.1,
+    "z": 0.0
+},
 ```
 
-In our `"ModelInstance"` entity we can link together the instance frame, the object to be instantiated, and in which world it is instantiated. Optionally, we can also specify an initial state for the objects.
+In our `"ModelInstance"` entity we can link together the instance frame, the object to be instantiated, and in which world it is instantiated. Optionally, we can also specify an initial state for the objects. 
 
 ```json
 {
-    "@id": "door-instance-2",
+    "@id": "door-instance-1",
     "@type": "ObjectInstance",
-    "frame": "frame-location-door-2",
+    "frame": "frame-location-door-1",
     "of-object": "door",
     "world": "brsu_building_c_with_doorways",
 }
@@ -192,7 +226,7 @@ After running the tool, we obtain the SDF model file for the object, and a world
 |:--------------------------------------------:|
 | Figure 7: finite state machine for a door |
 
-It might be of interest for a test that a door is at a specific state. A finite state machine, such as the one picture above, can be used to model all the states the door can be in and the transitions between them. With kinematic chains, such as the door, the states can refer to joint positions. A fully closed door is a door where the joint position is set to 0 radians, whereas a fully opened door has the joint position set at 1.7 radians. We compose the joints positions with the states model to specify the pose of the door at a specific state. 
+It might be of interest for a test that a door is at a specific state. A finite state machine, such as the one picture above, can be used to model all the states the door can be in and the transitions between them. With kinematic chains, such as the door, the states can refer to joint positions. A fully closed door is a door where the joint position is set to 0 radians, whereas a fully opened door has the joint position set at 1.7 radians. We compose the joints positions with the states model to specify the pose of the door at a specific state. The object state model is available [here](../input/object-door-states.json).
 
 |![](../images/door-example-joint-positions.png)|
 |:---------------------------------------------:|
