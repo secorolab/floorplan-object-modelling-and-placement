@@ -86,7 +86,7 @@ These elements are the building blocks for the spatial relations necessary to po
 ```
 To model the pose of each link and joint, only 4 pose descriptions are necessary, and they are illustrated here:
 
-[All the pose relations and coordinate references required for the door model](../images/door-example-poses.png)
+![All the pose relations and coordinate references required for the door model](../images/door-example-poses.png)
 
 For each link in the kinematic chain there is also inertia, visual geometry, and collision geometry information that is required. The joint of the door also requires some information about the zero configuration, its maximum and lowest values, and optionally the states that it can be.
 
