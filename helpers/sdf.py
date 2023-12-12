@@ -74,7 +74,7 @@ def get_sdf_axis_of_rotation(g, joint):
 
 def write_object_model_sdf(data, output_folder):
 
-    file_loader = FileSystemLoader('templates')
+    file_loader = FileSystemLoader(os.path.join(ROOT_PATH,'templates'))
     env = Environment(loader=file_loader)
     
     name_without_id = data["name"][5:]
@@ -82,7 +82,6 @@ def write_object_model_sdf(data, output_folder):
 
     if not os.path.exists(full_path):
         os.makedirs(full_path)
-
     template = env.get_template('model.sdf.jinja')
     output = template.render(data=data, trim_blocks=True, lstrip_blocks=True)
 
@@ -98,18 +97,19 @@ def write_object_model_sdf(data, output_folder):
         print("{name} CONFIG FILE: {path}".format(name=name_without_id, path=os.path.join(full_path, "{name}.config".format(name=name_without_id))))
 
 def write_world_model_sdf(data, output_folder):
-    file_loader = FileSystemLoader('templates')
+    
+    file_loader = FileSystemLoader(os.path.join(ROOT_PATH,'templates'))
     env = Environment(loader=file_loader)
 
     name_without_id = data["world_name"][10:]
     
-    full_path = os.path.join(output_folder, name_without_id)
+    full_path = os.path.join(output_folder)
     if not os.path.exists(full_path):
         os.makedirs(full_path)
 
     template = env.get_template('world.sdf.jinja')
     output = template.render(data=data, trim_blocks=True, lstrip_blocks=True)
 
-    with open(os.path.join(full_path, "{name_without_id}.sdf".format(name_without_id=name_without_id)), "w") as f:
+    with open(os.path.join(full_path, "{name_without_id}.world".format(name_without_id=name_without_id)), "w") as f:
         f.write(output)
-        print("{name} WORLD FILE: {path}".format(name=name_without_id, path=os.path.join(full_path, "model.sdf")))
+        print("{name} WORLD FILE: {path}".format(name=name_without_id, path=os.path.join(full_path, "{name_without_id}.world")))

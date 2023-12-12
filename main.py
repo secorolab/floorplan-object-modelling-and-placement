@@ -25,6 +25,8 @@ from helpers.sdf import (
     write_object_model_sdf,
     write_world_model_sdf
 )
+from helpers.constants import ROOT_PATH
+
 from helpers.constants import *
 
 if __name__ == "__main__":
@@ -35,7 +37,7 @@ if __name__ == "__main__":
 
     # Read config file and set properties
     config = configparser.ConfigParser()
-    config.read('setup.cfg')
+    config.read(os.path.join(ROOT_PATH, 'setup.cfg'))
     model_config = config["models"]
     DEBUG = config["dev"].getboolean('debug')
     output_folder = model_config.get("gazebo_models_location") if model_config.getboolean('save_to_gazebo') else model_config.get("output_folder")
@@ -226,7 +228,7 @@ if __name__ == "__main__":
 
         data["instances"].append(instance)
         data["model_name"] = prefixed(g, world)[10:]
-        data["world_name"] = "{}_with_objects".format(prefixed(g, world))
+        data["world_name"] = "{}".format(prefixed(g, world))
 
     # Build and write the sdf world
     write_world_model_sdf(data, worlds_output_path)

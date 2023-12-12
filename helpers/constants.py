@@ -1,4 +1,6 @@
 import rdflib
+import os
+from pathlib import Path
 
 # FloorPlan metamodels
 FP = rdflib.Namespace("https://hbrs-sesame.github.io/metamodels/floorplan#")
@@ -23,3 +25,5 @@ COORD_EXT = rdflib.Namespace("https://hbrs-sesame.github.io/metamodels/coordinat
 
 # simulator metamodel
 GZB = rdflib.Namespace("https://hbrs-sesame.github.io/metamodels/gazebo#")
+
+ROOT_PATH = Path(os.path.dirname(os.path.abspath(__file__))).parent

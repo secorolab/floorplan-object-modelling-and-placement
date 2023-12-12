@@ -66,7 +66,7 @@ def get_transformation_matrix_wrt_frame(g, root, target):
         
         # Get the coordinates for the pose
         current_frame_coordinates = g.value(predicate=COORD["of-pose"], object=pose)
-
+        # print(current_frame_coordinates)
         # Get x and y values
         x = g.value(current_frame_coordinates, COORD["x"]).toPython()
         y = g.value(current_frame_coordinates, COORD["y"]).toPython()
@@ -79,12 +79,15 @@ def get_transformation_matrix_wrt_frame(g, root, target):
         t = g.value(current_frame_coordinates, COORD_EXT["theta"]).toPython()
         if QUDT_VOCAB["degrees"] in g.objects(current_frame_coordinates, QUDT["unit"]):
             t = np.deg2rad(t)
+
+        # print(np.rad2deg(t))
         # Build the transformation matrix
         new_T = build_transformation_matrix(x, y, z, t)
 
         # If the pose is defined by two wall frames, then invert the transformation matrix
         # This is necessary as the FloorPlan DSL calculate certain transformations using frames from walls
         if prefixed(g, pose).count("wall") > 1:
+            # print("HERE ", current_frame_coordinates)
             new_T = np.linalg.pinv(new_T)
         
         # Apply the transform
