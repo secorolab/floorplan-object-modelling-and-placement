@@ -1,5 +1,9 @@
 # Object Modelling and Placement Tool
 
+> [!important]
+> This tool has now been integrated into the [scenery_builder](https://github.com/secorolab/scenery_builder).
+> As a result, this repository has been archived and is unmaintained.
+
 This tool is a companion tool for the FloorPlan DSL, which enables the modelling of objects and their placement in the indoor environments from the FloorPlan DSL. 
 
 ![](images/gazebo-screenshot.png)
